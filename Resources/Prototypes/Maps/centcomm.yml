@@ -1,70 +1,14 @@
 - type: gameMap
-  id: CentComm
-  mapName: 'Central Command'
-  mapPath: /Maps/centcomm.yml
-  minPlayers: 10
+  id: SpacePort
+  mapName: 'Космопорт'
+  mapPath: /Maps/Genezis/SpacePort.yml
+  minPlayers: 0
   stations:
-    centcomm:
+    SpacePort:
       stationProto: NanotrasenCentralCommand
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Central Command {1}'
+          mapNameTemplate: '{0} Космопорт {1}'
           nameGenerator:
             !type:NanotrasenCentComNameGenerator
-            prefixCreator: 'TG'
-#        - type: StationJobs
-#          availableJobs:
-#            BKCCOperator: [ 1, 1]
-#            BKCCSecGavna: [ 1, 1]
-#            BKCCCargo: [ 1, 2]
-#            BKCCSecOfficer: [ 2, 2]
-#            BKCCAssistant: [ 2, 4]
-#            BKCCAdmiral: [ 0, 0]
-
-- type: gameMap
-  id: CentCommv2
-  mapName: 'Central Command'
-  mapPath: /Maps/Backmen/corvax_centcomm_bkm.yml
-  minPlayers: 20
-  stations:
-    centcomm:
-      stationProto: NanotrasenCentralCommand
-      components:
-      - type: StationNameSetup
-        mapNameTemplate: '{0} Central Command {1}'
-        nameGenerator:
-          !type:NanotrasenCentComNameGenerator
-          prefixCreator: 'CX'
-#      - type: StationJobs
-#        availableJobs:
-#          BKCCOperator: [ 1, 1]
-#          BKCCSecGavna: [ 1, 1]
-#          BKCCCargo: [ 1, 2]
-#          BKCCSecOfficer: [ 2, 2]
-#          BKCCAssistant: [ 2, 4]
-#          BKCCAdmiral: [ 0, 0]
-
-- type: gameMap
-  id: CentCommv3
-  mapName: 'Central Command'
-  mapPath: /Maps/Backmen/CentComBackmen.yml
-  minPlayers: 20
-  stations:
-    centcomm:
-      stationProto: NanotrasenCentralCommand
-      components:
-      - type: StationNameSetup
-        mapNameTemplate: '{0} Central Command {1}'
-        nameGenerator:
-          !type:NanotrasenCentComNameGenerator
-          prefixCreator: 'B'
-#      - type: StationJobs
-#        availableJobs:
-#          BKCCOfficial: [ 1, 1]
-#          BKCCOperator: [ 1, 1]
-#          BKCCSecGavna: [ 1, 1]
-#          BKCCCargo: [ 1, 2]
-#          BKCCSecOfficer: [ 2, 3]
-#          BKCCAssistant: [ 2, 4]
-#          BKCCAdmiral: [ 0, 0]
-
+            prefixCreator: 'TH'
