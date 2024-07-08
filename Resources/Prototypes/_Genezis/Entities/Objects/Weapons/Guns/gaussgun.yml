@@ -1,0 +1,37 @@
+- type: entity
+  name: Gaussgun
+  parent: BaseWeaponBatterySmall
+  id: WeaponGaussGun
+  description: HoS used this gun in battle.
+  components:
+  - type: Sprite
+    sprite: Genezis/Objects/Weapons/Guns/GaussGun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-2
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    fireRate: 2
+    projectileSpeed: 75
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns64/EG-P/shot.ogg
+  - type: Item
+    size: SmallNormal
+  - type: ProjectileBatteryAmmoProvider
+    proto: X01Attack
+    fireCost: 200
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: X01Attack
+      fireCost: 200
+    - proto: BulletTaser
+      fireCost: 100
+  - type: Appearance
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40

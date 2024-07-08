@@ -1,0 +1,6 @@
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconLavaMiner
+  icon:
+    sprite: /Textures/Genezis/Icons/jobicon.rsi
+    state: LavaMiner

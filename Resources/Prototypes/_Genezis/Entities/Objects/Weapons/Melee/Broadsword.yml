@@ -1,0 +1,31 @@
+- type: entity
+  name: Палаш главнокомандующего
+  parent: BaseItem
+  id: CapBroadsword
+  description: Оружие, выданное главнокомандующему Триглавом за службу. Скорее травмирует, нежели режет.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Genezis/Objects/Weapons/Melee/Broadsword.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 0.9
+    damage:
+      types:
+        Slash: 5
+        Blunt: 17
+        Structural: 5
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    enabled: true
+    reflectProb: .1
+    spread: 90
+  - type: Item
+    size: Normal
+    sprite: Genezis/Objects/Weapons/Melee/Broadsword.rsi
+  - type: Tag
+    tags:
+    - CapBroadsword
+  - type: DisarmMalus

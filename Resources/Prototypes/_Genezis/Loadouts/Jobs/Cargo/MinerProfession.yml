@@ -1,0 +1,140 @@
+- type: startingGear
+  id: LavaMinerProfessionGear
+  equipment:
+    id: MinerPDA
+    shoes: ClothingShoesBootsSalvage #Ботинки
+    eyes: ClothingEyesGlassesCheapSunglasses    #Очки
+    gloves: ClothingHandsGlovesColorBlack #Перчатки
+    ears: ClothingHeadsetMining #Уши
+    pocket1: LavaPhoneInstrument
+
+
+# Back
+- type: loadout
+  id: ClothingBackpackSatchelSalvage
+  equipment: ClothingBackpackSatchelSalvage
+
+- type: startingGear
+  id: ClothingBackpackSatchelSalvage
+  equipment:
+    back: ClothingBackpackSatchelSalvage
+
+- type: loadout
+  id: ClothingBackpackDuffelSalvage
+  equipment: ClothingBackpackDuffelSalvage
+
+- type: startingGear
+  id: ClothingBackpackDuffelSalvage
+  equipment:
+    back: ClothingBackpackDuffelSalvage
+
+- type: loadout
+  id: ClothingBackpackSalvage
+  equipment: ClothingBackpackSalvage
+
+- type: startingGear
+  id: ClothingBackpackSalvage
+  equipment:
+    back: ClothingBackpackSalvage
+
+# Head
+- type: loadout
+  id: ClothingHeadHatUshanka
+  equipment: ClothingHeadHatUshanka
+
+- type: startingGear
+  id: ClothingHeadHatUshanka
+  equipment:
+    head: ClothingHeadHatUshanka
+
+- type: loadout
+  id: ClothingHeadHatHardhatOrange
+  equipment: ClothingHeadHatHardhatOrange
+
+- type: startingGear
+  id: ClothingHeadHatHardhatOrange
+  equipment:
+    head: ClothingHeadHatHardhatOrange
+
+- type: loadout
+  id: ClothingHeadHatHardhatBlue
+  equipment: ClothingHeadHatHardhatBlue
+
+- type: startingGear
+  id: ClothingHeadHatHardhatBlue
+  equipment:
+    head: ClothingHeadHatHardhatBlue
+
+- type: loadout
+  id: ClothingHeadHatHardhatRed
+  equipment: ClothingHeadHatHardhatRed
+
+- type: startingGear
+  id: ClothingHeadHatHardhatRed
+  equipment:
+    head: ClothingHeadHatHardhatRed
+
+- type: loadout
+  id: ClothingHeadHatHardhatWhite
+  equipment: ClothingHeadHatHardhatWhite
+
+- type: startingGear
+  id: ClothingHeadHatHardhatWhite
+  equipment:
+    head: ClothingHeadHatHardhatWhite
+
+- type: loadout
+  id: ClothingHeadHatHardhatYellow
+  equipment: ClothingHeadHatHardhatYellow
+
+- type: startingGear
+  id: ClothingHeadHatHardhatYellow
+  equipment:
+    head: ClothingHeadHatHardhatYellow
+
+- type: loadout
+  id: ClothingHeadHatHardhatYellowDark
+  equipment: ClothingHeadHatHardhatYellowDark
+
+- type: startingGear
+  id: ClothingHeadHatHardhatYellowDark
+  equipment:
+    head: ClothingHeadHatHardhatYellowDark
+
+# OuterClothing
+- type: loadout
+  id: ClothingOuterWinterMiner
+  equipment: ClothingOuterWinterMiner
+
+- type: startingGear
+  id: ClothingOuterWinterMiner
+  equipment:
+    outerClothing: ClothingOuterWinterMiner
+
+- type: loadout
+  id: ClothingOuterCoatBomber
+  equipment: ClothingOuterCoatBomber
+
+- type: startingGear
+  id: ClothingOuterCoatBomber
+  equipment:
+    outerClothing: ClothingOuterCoatBomber
+
+# Jumpsuit
+- type: loadout
+  id: ClothingUniformJumpsuitSalvageSpecialist
+  equipment: ClothingUniformJumpsuitSalvageSpecialist
+
+- type: startingGear
+  id: ClothingUniformJumpsuitSalvageSpecialist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+
+- type: loadout
+  id: ClothingUniformJumpsuitAncient
+  equipment: ClothingUniformJumpsuitAncient
+
+- type: startingGear
+  id: ClothingUniformJumpsuitAncient
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAncient

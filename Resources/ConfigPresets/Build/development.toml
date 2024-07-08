@@ -1,12 +1,12 @@
 [game]
 # Straight in-game baby
-lobbyenabled = false
+lobbyenabled = true
 # Dev map for faster loading & convenience
-map = "Dev"
-role_timers = false
+map = ""
+role_timers = true
 
 [gateway]
-generator_enabled = false
+generator_enabled = true
 
 [physics]
 # Makes mapping annoying
@@ -20,13 +20,13 @@ expedition_cooldown = 30.0
 
 [shuttle]
 grid_fill = false
-auto_call_time = 0
-emergency = false
-arrivals = false
+auto_call_time = 1800
+emergency = true
+arrivals = true
 preload_grids = false
 
 [admin]
 see_own_notes = true
 
 [net]
-tickrate = 20
+tickrate = 60

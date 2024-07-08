@@ -5,6 +5,7 @@
   roles:
   - CargoTechnician
   - Quartermaster
+  - MinerProfession #Genezis
   - SalvageSpecialist
   accountNumber: 1315 #backmen: currency
 

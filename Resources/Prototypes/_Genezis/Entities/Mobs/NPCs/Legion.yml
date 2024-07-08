@@ -1,0 +1,438 @@
+﻿#ЛЕГИОН БОСС
+- type: entity
+  parent:
+  - MobLavaGost
+  - MobBubblegum
+  id: MobLegion
+  name: Легион
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/empire.rsi
+    layers:
+      - state: mega_legion
+        map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mega_legion
+      Dead:
+        Base: eva_attack
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 4.5
+  - type: PointLight
+    radius: 0
+    energy: 0
+    color: "#ff4242"
+    castShadows: false
+  - type: MobThresholds #ХП
+    thresholds:
+      0: Alive
+      450: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      400: 0.7
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: AttackLava
+    damage:
+      types:
+        Blunt: 5
+        Structural: 200
+  - type: AutoImplant
+    implants:
+    - LightImplantSpiderLegion
+    - LightImplantSpiderLegionBig
+  - type: Butcherable #Разделка
+    spawned:
+      - id: ClothingNeckCloakVoidLegion
+        amount: 1
+      - id: MobDinosaurAnkiSmallSmall
+        amount: 4
+      - id: HealingToolboxKernel
+        amount: 4
+  - type: RechargeBasicEntityAmmo #Кислота
+    rechargeCooldown: 2
+  - type: BasicEntityAmmoProvider
+    proto: SpawnMobLegion
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 1
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Genezis/Voice/Lavaland/the-lava-bubble-gurgled.ogg   #Звук кислоты   #Кислота
+  - type: Bloodstream
+    bloodMaxVolume: 0
+    bloodReagent: Cryoxadone
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.Самолечение
+    allowedStates:
+    - Alive
+    damageCap: 2000
+    damage:
+      types:
+        Heat: -4.5
+      groups:
+        Brute: -4.5
+        Toxin: -4
+        Airloss: -4.5
+        Burn: -4.5
+
+- type: entity
+  name: Спавнер Легион
+  id: SpawnMobLegion2
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: mega_legion
+      sprite: Genezis/Mobs/Monster/dragon.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLegion
+
+- type: entity
+  id: SpawnerSignalLegion
+  name: одноразовый маркер спавна Легион по сигналу
+  parent: BaseERTSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Genezis/Mobs/Monster/dragon.rsi
+        state: mega_legion
+  - type: SpawnOnTrigger
+    proto: SpawnPointGhostLegion
+
+- type: entity
+  id: SpawnPointGhostLegion
+  name: спавнер роли Легиона
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: Легион
+    description: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+    rules: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobLegion
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Genezis/Mobs/Monster/dragon.rsi
+        state: mega_legion
+
+- type: entity
+  parent: ClothingNeckCloakVoid
+  id: ClothingNeckCloakVoidLegion
+  name: плащ легиона
+  description: Редкий трофей!
+  components:
+  - type: ClothingSpeedModifier
+    walkModifier: 1.3
+    sprintModifier: 1.3
+  - type: PointLight
+    radius: 3
+    energy: 2.5
+    color: "#ff4242"
+    castShadows: false
+
+- type: entity
+  parent: MobFleshJaredSalvage #Череп
+  id: MobDinosaurAnkiSmallSmall
+  name: череп легиона
+  description: О боже оно бежит ко мне??!
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/legion.rsi
+    layers:
+      - state: dragon
+        map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: dragon
+      Dead:
+        Base: dragon
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 4.5
+  - type: PointLight
+    radius: 0
+    energy: 0
+    color: "#ff4242"
+    castShadows: false
+  - type: MobThresholds #ХП
+    thresholds:
+      0: Alive
+      10: Dead
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: AttackLava
+    damage:
+      types:
+        Blunt: 5
+  - type: TimedDespawn #Система цикла
+    lifetime: 4
+  - type: Bloodstream
+    bloodMaxVolume: 0
+    bloodReagent: Cryoxadone
+
+
+- type: entity
+  parent:
+  - MobLavaGost
+  - MobXenoSpitter
+  id: MobDinosaurAnkiSmall
+  name: легион #Большой
+  description: Кто это?
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/empire.rsi
+    layers:
+      - state: dragon
+        map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: dragon
+      Dead:
+        Base: dragon_dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 3
+  - type: PointLight
+    radius: 0
+    energy: 0
+    color: "#ff4242"
+    castShadows: false
+  - type: MobThresholds #ХП
+    thresholds:
+      0: Alive
+      15: Dead
+  - type: Butcherable #Разделка
+    spawned:
+      - id: HealingToolboxKernel
+        amount: 1
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: AttackLava
+    damage:
+      types:
+        Blunt: 5
+  - type: AutoImplant
+    implants:
+    - LightImplantSpiderLegion
+  - type: TimedDespawn #Система цикла
+    lifetime: 360
+  - type: RechargeBasicEntityAmmo #Кислота
+    rechargeCooldown: 2
+  - type: BasicEntityAmmoProvider
+    proto: SpawnMobLegion
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 1
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Genezis/Voice/Lavaland/the-lava-bubble-gurgled.ogg #Звук кислоты   #Кислота
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 45
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            HealingToolboxKernel:
+              min: 1
+              max: 1
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.Самолечение
+    allowedStates:
+    - Alive
+    damageCap: 300
+    damage:
+      types:
+        Heat: -25
+      groups:
+        Brute: -1
+        Toxin: -1
+        Airloss: -1
+        Burn: -10
+  - type: Bloodstream
+    bloodMaxVolume: 0
+    bloodReagent: Cryoxadone
+  - type: GhostRole
+    prob: 0
+    name: ghost-role-information-willow-name
+    description: ghost-role-information-willow-description
+
+- type: entity
+  name: Спавнер легиона
+  id: SpawnMobDinosaurAnkiSmall
+  parent: SpawnMobLegion
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobDinosaurAnkiSmall
+
+- type: entity
+  parent: BaseHealingItem
+  id: HealingToolboxKernel
+  name: ядро легиона
+  description: В то время как ядро может быть использованы для лечения грубых и ожоговых повреждений, причина, по которой они так важны, заключается в том, что они могут исцелять сломанные кости и внутреннее кровотечение. Способность лечения пропадает через 5 минут!
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/healing_toolbox.rsi
+    state: icon
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      groups: # these are all split across multiple types
+        Brute: -150
+        Burn: -150
+        Toxin: -150
+    bloodlossModifier: -20
+    delay: 1
+    selfHealPenaltyMultiplier: 0
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: TimedDespawn #Система цикла
+    lifetime: 300
+  - type: PointLight
+    radius: 2
+    energy: 0.2
+    color: "#ff4242"
+    castShadows: false
+  - type: Construction
+    graph: GhostSheet
+    node: ghost_sheet
+
+#Череп
+- type: entity
+  id: ActionSpawnMagicarpLegion #Заклинание призыва черепов
+  name: Призыв черепа легиона.
+  description: Выпускает череп легиона.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 6 #КД
+    range: 2
+    itemIconStyle: BigAction
+    icon:
+      sprite: Genezis/Mobs/Monster/healing_toolbox.rsi
+      state: icon
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: MobDinosaurAnkiSmallSmall
+        amount: 1
+      offset: 0, 1
+      speech: Кссс...!??
+
+- type: entity
+  parent: BaseSubdermalImplant #Сам имплант
+  id: LightImplantSpiderLegion
+  name: Откладывание яиц охотника
+  description:
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpLegion      #Суда заклинание
+
+- type: entity
+  name: Спавнер черепа
+  id: SpawnMobLegion
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: goat
+      sprite: Mobs/Animals/goat.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobDinosaurAnkiSmallSmall
+  - type: TimedDespawn #Система цикла
+    lifetime: 5
+
+#Легион большой
+- type: entity
+  id: ActionSpawnMagicarpLegionBig
+  name: Призвать легиона.
+  description: Призывает Легиона, который пропадает через 20 секунд.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 12 #КД
+    range: 2
+    itemIconStyle: BigAction
+    icon:
+      sprite: Genezis/Mobs/Monster/healing_toolbox.rsi
+      state: icon
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: MobDinosaurAnkiSmallBig
+        amount: 1
+      offset: 0, 1
+      speech: Кссс...!??
+
+- type: entity
+  parent: BaseSubdermalImplant #Сам имплант
+  id: LightImplantSpiderLegionBig
+  name: Откладывание яиц охотника
+  description:
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpLegionBig      #Суда заклинание
+
+- type: entity
+  parent: MobDinosaurAnkiSmall
+  id: MobDinosaurAnkiSmallBig
+  noSpawn: true
+  name: легион #Большой
+  components:
+  - type: TimedDespawn #Система цикла
+    lifetime: 20
+
+- type: entity
+  name: периодический спавнер легиона
+  id: WallRockBasaltSpawnerLavaLegion
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Genezis/Mobs/Monster/empire.rsi
+          state: dragon
+        - state: timed
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+        - MobDinosaurAnkiSmall
+      # round ~90m
+      # one spawner should only spawn ~5 mice for sanity reasons
+      # therefore 18m
+      # use 50% chance for randomness and balance with halved interval
+      chance: 0.5
+      intervalSeconds: 240
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1

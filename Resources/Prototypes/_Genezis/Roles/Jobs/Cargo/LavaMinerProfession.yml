@@ -1,0 +1,67 @@
+- type: job
+  id: MinerProfession
+  name: шахтёр
+  description: Добро пожаловать к самоубийцам, Сынок. Ваша задача отправится на планету прозванную Лаваленд, сражайтесь с монстрами и умирайте во имя Триглава.
+  playTimeTracker: JobMinerProfession
+  icon: "JobIconLavaMiner"
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 18000 #5 часов
+  startingGear: LavaMinerProfessionGear
+  supervisors: job-supervisors-qm
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  setPreference: true
+  canBeAntag: false
+  weight: 1
+  access:
+  - Cargo
+  - Salvage
+  - Maintenance
+  - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Cargo
+  wage: 50
+
+#СПАВНЕРЫ
+
+- type: randomHumanoidSettings
+  id: LavaSettingsMinerProfession
+  randomizeName: true
+  components:
+    - type: Loadout
+      prototypes: [LavaMinerProfessionGear]
+    - type: GhostRole
+      name: 'Шахтёр'
+      description: "Добро пожаловать к самоубийцам, Сынок. Ваша задача отправится на планету прозванную Лаваленд, сражайтесь с монстрами и умирайте во имя Триглава."
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  id: LavaRandomHumanoidSpawnerMinerProfession
+  name: Шахтёр
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: cburn
+    - type: RandomHumanoidSpawner
+      settings: LavaSettingsMinerProfession
+
+
+## Спавн маркер
+
+- type: entity
+  id: SpawnPointMinerProfession
+  parent: SpawnPointJobBase
+  name: Шахтёр
+  components:
+  - type: SpawnPoint
+    job_id: MinerProfession
+  - type: Sprite
+    layers:
+      - state: green
+      - state: security_officer

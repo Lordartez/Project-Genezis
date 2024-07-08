@@ -1,0 +1,307 @@
+﻿#Бубльгум
+- type: entity
+  parent:
+  - MobLavaGost
+  - MobHellspawn
+  id: MobBubblegum
+  name: Бубльгум
+  description: ЧТО ЭТО??!
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/dragon.rsi
+    layers:
+      - state: bubblegum
+        map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bubblegum
+      Dead:
+        Base: bubblegum
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: AttackLava
+    damage:
+      types:
+        Blunt: 50
+        Piercing: 15
+        Structural: 500
+  - type: MovementSpeedModifier #Скорость
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
+  - type: Reflect
+    enabled: true
+    reflectProb: 0.5
+    velocityBeforeNotMaxProb: 1.0
+    velocityBeforeMinProb: 3.0
+    minReflectProb: 0.1
+    spread: 90      #Отражение
+  - type: MobThresholds #ХП
+    thresholds:
+      0: Alive
+      2600: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      1900: 0.7
+  - type: Butcherable #Разделка
+    spawned:
+      - id: ArtifactFragment
+        amount: 4
+      - id: ClothingNeckCloakGoliathCloakHellspawn
+        amount: 1
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#ff4242"
+    castShadows: false
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.Самолечение
+    allowedStates:
+    - Alive
+    damageCap: 2000
+    damage:
+      types:
+        Heat: -8.5
+      groups:
+        Brute: -8.5
+        Toxin: -8
+        Airloss: -8.5
+        Burn: -8.5
+  - type: AutoImplant
+    implants:
+    - LightImplantSpiderBubblegumRune
+    - LightImplantSpiderActionBlinkBubblegumJump
+    - LavaLightImplanter
+  - type: IgnoreSpiderWeb
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2000
+  - type: Vocal
+    sounds:
+      Male: UnisexBreath
+      Female: UnisexBreath
+      Unsexed: UnisexBreath #Крик
+
+- type: entity
+  name: Спавнер Бубльгум
+  id: SpawnMobBubblegum
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: bubblegum
+      sprite: Genezis/Mobs/Monster/dragon.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBubblegum
+
+- type: entity
+  id: SpawnerSignalBubblegum
+  name: одноразовый маркер спавна Бубльгум по сигналу
+  parent: BaseERTSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Genezis/Mobs/Monster/dragon.rsi
+        state: bubblegum
+  - type: SpawnOnTrigger
+    proto: SpawnPointGhostBubblegum
+
+- type: entity
+  id: SpawnPointGhostBubblegum
+  name: спавнер роли Бубльгум
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: Бубльгум
+    description: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+    rules: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobBubblegum
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Genezis/Mobs/Monster/dragon.rsi
+        state: bubblegum
+
+- type: entity
+  parent: ClothingNeckCloakGoliathCloak
+  id: ClothingNeckCloakGoliathCloakHellspawn
+  name: плащ Бубльгума
+  description: Редкий трофей!
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8 #Быстрая броня, но защита не лучшая.
+        Slash: 0.75
+        Piercing: 0.8
+        Heat: 0.65
+        Radiation: 0.9
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: PointLight
+    radius: 3
+    energy: 2.5
+    color: "#ff4242"
+    castShadows: false
+
+- type: entity
+  id: SpiderWebUsual #Паутина без шелка.
+  name: капкан
+  description: Ловушка!
+  parent: SpiderWeb
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: TimedDespawn #Система цикла
+      lifetime: 5
+      ignoreWhitelist:
+        components:
+            - IgnoreSpiderWeb
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      sprite: Genezis/Mobs/Monster/telegraph.rsi
+      layers:
+        - state: target_circle
+          map: ["spiderWebLayer"]
+      drawdepth: WallMountedItems
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.SpiderWebVisuals.Variant:
+          spiderWebLayer:
+            1:  {state: target_circle}
+            2:  {state: target_circle}
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - MidImpassable
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      coldDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      damage:
+        types:
+          Heat: 5
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+    - type: SpiderWebObject
+    - type: SpeedModifierContacts #Замедление паутины
+      walkSpeedModifier: 0.3
+      sprintSpeedModifier: 0.3
+      ignoreWhitelist:
+        components:
+            - IgnoreSpiderWeb
+
+#Руна
+- type: entity
+  id: ActionSpawnMagicarpBubblegumRune #Заклинание призыва лавы 1
+  name: Создать руну воспламенения
+  description: Создает руну воспламениния, которая пропадает через 15 секунд.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 25 #КД
+    range: 8
+    itemIconStyle: BigAction
+    icon:
+      sprite: Genezis/Mobs/Monster/telegraph.rsi
+      state: target_circle
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: IgniteRuneRune
+        amount: 1
+      offset: 0, 1
+      speech: Рррр...!??
+
+- type: entity
+  parent: BaseSubdermalImplant #Сам имплант
+  id: LightImplantSpiderBubblegumRune
+  name: Создать руну воспламенения
+  description: Создает руну воспламениния, которая пропадает через 15 секунд.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpBubblegumRune      #Суда заклинание
+
+- type: entity
+  parent: IgniteRune
+  id: IgniteRuneRune
+  name: руна воспламенения
+  description:
+  noSpawn: true
+  components:
+    - type: TimedDespawn #Система цикла
+      lifetime: 15
+      ignoreWhitelist:
+
+#Прыжок
+- type: entity
+  id: ActionBlinkBubblegumJump
+  name: Разбег.
+  description: Вы разбегаетесь со скоростью света в определенную точку.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 30
+    range: 8
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    repeat: true
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: blink
+    event: !type:TeleportSpellEvent
+
+- type: entity
+  parent: BaseSubdermalImplant #Сам имплант
+  id: LightImplantSpiderActionBlinkBubblegumJump
+  name: Разбег.
+  description: Вы разбегаетесь со скоростью света в определенную точку.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionBlinkBubblegumJump      #Суда заклинание

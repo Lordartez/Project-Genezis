@@ -1,0 +1,77 @@
+﻿#ШИПЫ
+
+- type: entity
+  name: Шип Некрополя
+  description: Порождение некрополя, шип из разложившейся плоти пробившийся наружу из самых недр Лаваленда дабы дать жизнь бесчисленному множеству чудовищ.
+  parent: BaseWeaponTurret
+  id: TurretPliersGoliath
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: Sprite
+      sprite: Genezis/Mobs/Monster/pliers.rsi
+      noRot: true
+      layers:
+        - state: state1
+    - type: BallisticAmmoProvider
+      proto: SpawnMobGoliath
+      capacity: 400
+    - type: Gun
+      fireRate: 0.15
+      selectedMode: FullAuto
+      soundGunshot: /Audio/Genezis/Voice/Lavaland/the-lava-bubble-gurgled.ogg
+    - type: HTN
+      rootTask:
+        task: TurretCompound
+      blackboard:
+        SoundTargetInLOS: !type:SoundPathSpecifier
+          path: /Audio/Animals/snake_hiss.ogg
+    - type: Damageable
+      damageContainer: Biological
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 400
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/gib1.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                WoodenSupportBeamDrake:
+                  min: 10
+                  max: 10
+                NecrocrateopenRandom:
+                  min: 1
+                  max: 1
+    - type: InteractionPopup
+      interactDelay: 1.0
+      successChance: 0.8
+      interactSuccessString: petting-success-generic
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Animals/snake_hiss.ogg
+
+- type: entity
+  name: Шип Некрополя
+  description: Порождение некрополя, шип из разложившейся плоти пробившийся наружу из самых недр Лаваленда дабы дать жизнь бесчисленному множеству чудовищ.
+  parent: TurretPliersGoliath
+  id: TurretPliersMagmawing
+  components:
+    - type: BallisticAmmoProvider
+      proto: SpawnMobWatcherMagmawing
+      capacity: 500
+
+- type: entity
+  name: Шип Некрополя
+  description: Порождение некрополя, шип из разложившейся плоти пробившийся наружу из самых недр Лаваленда дабы дать жизнь бесчисленному множеству чудовищ.
+  parent: TurretPliersGoliath
+  id: TurretPliersLegion
+  components:
+    - type: BallisticAmmoProvider
+      proto: SpawnMobDinosaurAnkiSmall
+      capacity: 500

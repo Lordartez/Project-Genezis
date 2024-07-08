@@ -1,0 +1,29 @@
+## КПК
+
+- type: entity
+  parent: BasePDA
+  id: MinerPDA
+  name: КПК шахтёра
+  description: Наверняка владелец этого КПК любит пиво или абсент.
+  components:
+  - type: Pda
+    id: MinerIDCard
+    state: pda-miner
+  - type: PdaBorderColor
+    borderColor: "#201c16"
+    accentVColor: "#520078"
+  - type: Icon
+    state: pda-miner
+
+- type: entity
+  parent: IDCardStandard
+  id: MinerIDCard
+  name: ID карта
+  description: Карта, необходимая для доступа в различные области станции.
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idshaftminer
+  - type: PresetIdCard
+    job: MinerProfession

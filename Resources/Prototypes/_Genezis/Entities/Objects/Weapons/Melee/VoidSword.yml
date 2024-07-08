@@ -1,0 +1,25 @@
+- type: entity
+  name: Пустотный меч
+  parent: BaseItem
+  id: Voidsword
+  description: Меч зачарован, а еще вы видите, что он странно искажается в пространстве...
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Genezis/Objects/Weapons/Melee/Void_sword.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    attackRate: 0.75
+    damage:
+      types:
+        Cellular: 15
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Normal
+    sprite: Genezis/Objects/Weapons/Melee/Void_sword.rsi
+  - type: Tool
+    qualities:
+      - Prying
+  - type: Prying

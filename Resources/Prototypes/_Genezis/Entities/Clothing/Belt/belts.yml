@@ -1,0 +1,31 @@
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase]
+  id: ClothingBroadswordSheath
+  name: ножны для палаша
+  description: Выполнены из темной стали для хранения любимого палаша главнокомандующего.
+  components:
+  - type: Sprite
+    sprite: Genezis/Clothing/Belt/sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: Genezis/Clothing/Belt/sheath.rsi
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      item:
+        name: Broadsword
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - CapBroadsword
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - CapBroadsword
+  - type: Appearance

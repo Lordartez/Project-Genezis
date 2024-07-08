@@ -1,0 +1,99 @@
+﻿#ГОЛИАФЫ
+- type: entity
+  parent:
+  - MobFleshJaredSalvage
+  id: MobGoliath
+  name: голиаф
+  description: Кто это?
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/goliath.rsi
+    layers:
+      - state: dragon
+        map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: dragon
+      Dead:
+        Base: dragon_dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 3
+  - type: PointLight
+    radius: 0
+    energy: 0
+    color: "#ff4242"
+    castShadows: false
+  - type: MobThresholds #ХП
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: Butcherable #Разделка
+    spawned:
+      - id: MaterialBones1
+        amount: 1
+      - id: FoodMeatGoliath
+        amount: 2
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: AttackLava
+    damage:
+      types:
+        Piercing: 10
+        Blunt: 3
+  - type: AutoImplant
+    implants:
+    - StorageImplanter
+  - type: TimedDespawn #Система цикла
+    lifetime: 360
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.Самолечение
+    allowedStates:
+    - Alive
+    damageCap: 300
+    damage:
+      types:
+        Heat: -25
+      groups:
+        Brute: -1
+        Toxin: -1
+        Airloss: -1
+        Burn: -10
+  - type: Bloodstream
+    bloodMaxVolume: 0
+    bloodReagent: Cryoxadone
+
+- type: entity
+  name: Спавнер голиафа
+  id: SpawnMobGoliath
+  parent: SpawnMobLegion
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobGoliath
+
+- type: entity
+  name: периодический спавнер голиафа
+  id: WallRockBasaltSpawnerLavaGoliath
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Genezis/Mobs/Monster/goliath.rsi
+          state: dragon
+        - state: timed
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+        - MobGoliath
+      # round ~90m
+      # one spawner should only spawn ~5 mice for sanity reasons
+      # therefore 18m
+      # use 50% chance for randomness and balance with halved interval
+      chance: 0.5
+      intervalSeconds: 240
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1

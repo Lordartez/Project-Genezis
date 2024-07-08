@@ -1,0 +1,843 @@
+﻿##МЕГАФАУНА
+
+- type: entity #Удар с аним.
+  id: AttackLava
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      fadeOut: false
+    - type: Sprite
+      sprite: Genezis/Mobs/Monster/telegraph.rsi
+      layers:
+        - state: bite
+    - type: TimedDespawn
+      lifetime: 0.399
+
+- type: entity
+  noSpawn: true
+  name: Гост ролька
+  id: MobLavaGost
+  components:
+  - type: GhostRole #Гост роль
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    requirements:
+    name: Обитатели Лаваленда
+    description: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+  - type: GhostTakeoverAvailable   #Гост роль
+
+ #Крик у всех
+- type: emoteSounds
+  id: UnisexBreath
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Genezis/Voice/Lavaland/monsters-breath_g1bqzbeu.ogg
+    Laugh:
+      path: /Audio/Genezis/Voice/Lavaland/monsters-breath_g1bqzbeu.ogg
+    Chitter:
+      path: /Audio/Genezis/Voice/Lavaland/monsters-breath_g1bqzbeu.ogg
+    Click:
+      path: /Audio/Genezis/Voice/Lavaland/monsters-breath_g1bqzbeu.ogg
+    Weh:
+      collection: Weh
+
+
+#ИМПЛАНТ СВЕТ
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LavaLightImplant
+  name: Свет.
+  description: Указывает вам путь.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionToggleLight
+    - type: PointLight
+      enabled: false
+      radius: 5
+      softness: 5
+      color: "#ff4242"
+      mask: /Textures/Effects/LightMasks/cone.png
+      autoRot: true
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - Flashlight
+    - type: UnpoweredFlashlight
+
+
+- type: entity
+  id: LavaLightImplanter
+  name: Свет.
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: LavaLightImplant
+
+
+#!АПЛИНК И РУДЫ!
+- type: entity
+  name: спавнер базальта случайно
+  id: WallRockBasaltSpawnerLava1
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+          state: nanotrasen
+    - type: RandomSpawner
+      prototypes:
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasalt
+        - WallRockBasaltBananium
+        - WallRockBasaltTin
+        - WallRockBasaltTin
+        - WallRockBasaltGold
+        - WallRockBasaltQuartz
+        - WallRockBasaltQuartz
+        - WallRockBasaltPlasma
+        - WallRockBasaltSilver
+        - WallRockBasaltSilver
+        - WallRockBasaltSalt
+        - WallRockBasaltSalt
+        - WallRockBasaltCoal
+        - WallRockBasaltCoal
+        - WallRockBasaltUranium
+        - WallRockBasaltArtifactFragment
+        - LavaWallRockBasaltArtifactFragment #Руда с кристаллом
+      offset: 0.0
+
+- type: entity
+  name: периодический спавнер базальта
+  id: WallRockBasaltSpawnerLava2
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/mouse.rsi
+          state: icon-2
+        - state: timed
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+        - WallRockBasaltSpawner
+        - WallRockBasalt
+      # round ~90m
+      # one spawner should only spawn ~5 mice for sanity reasons
+      # therefore 18m
+      # use 50% chance for randomness and balance with halved interval
+      chance: 0.5
+      intervalSeconds: 540
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
+
+#Камень с валютой
+- type: entity
+  id: LavaWallRockBasaltArtifactFragment
+  parent: WallRockBasalt
+  name: базальт
+  description: Каменная стена. Что это торчит из неё?
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreLavaRudaIvent
+    - type: Sprite
+      layers:
+        - state: rock_wall
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_wall_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_wall_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_wall_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_wall_west
+        - state: rock_artifact_fragment
+
+- type: ore
+  id: OreLavaRudaIvent
+  oreEntity: LavaRudaIvent
+  minOreYield: 1
+  maxOreYield: 3
+
+
+#-------------------ВСЕ ВЫШЕ ЭТО СИСТЕМА АПЛИНКА!---------------------
+#Наборы выше Содержимое
+
+- type: storeCategory  # категория
+  id: LavaUplinkWearablesMagician
+  name: Основное #categories
+  priority: 1
+
+#Коллекция выше
+- type: entity
+  id: StorePresetUplinkLava
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-uplink
+    categories:
+    - LavaUplinkWearablesMagician
+    currencyWhitelist:
+    - LavaRudaIvent
+    balance:
+      LavaRudaIvent: 0
+
+ #Список выше
+- type: entity #Сам аплинк
+  parent: [ BaseItem, StorePresetUplinkLava ]
+  id: LavaPhoneInstrument
+  name: терминал шахтёров
+  description: Винтажное радио?
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
+  - type: Item
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: old-radio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      LavaRudaIvent: 0
+
+- type: currency
+  id: LavaRudaIvent
+  displayName: "Инфиритовых Кристалла"
+  cash:
+    1: LavaRudaIvent
+  canWithdraw: true
+
+- type: entity
+  name: Инфиритовых Кристалла
+  parent: BaseItem
+  id: LavaRudaIvent
+  description: Кристалл, изученный научным департаментом Триглава, имеет много применений.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: ansible_crystal
+  - type: Item
+    sprite: Objects/Misc/stock_parts.rsi
+    heldPrefix: ansible_crystal
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      LavaRudaIvent: 1
+
+#Выше Аплинк
+#-------------------ВСЕ ВЫШЕ ЭТО СИСТЕМА АПЛИНКА!---------------------
+#ТОВАРЫ В АПЛИНКЕ
+- type: listing
+  id: ClothingOuterHardsuitLuxurySet #скаф
+  productEntity: ClothingOuterHardsuitLuxury
+  cost:
+    LavaRudaIvent: 10
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: BoxCleanerGrenadesSet #Чист
+  productEntity: BoxCleanerGrenades
+  cost:
+    LavaRudaIvent: 2
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: DrinkMopwataBottleRandomSet #выпивка
+  productEntity: DrinkMopwataBottleRandom
+  cost:
+    LavaRudaIvent: 2
+  categories:
+  - LavaUplinkWearablesMagician
+
+
+- type: listing
+  id: BorgChassisMiningSet #Борг
+  productEntity: BorgChassisMining
+  cost:
+    LavaRudaIvent: 25
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: WeaponCrusherSet #Крушитель
+  productEntity: WeaponCrusher
+  cost:
+    LavaRudaIvent: 12
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: WeaponCrusherGlaiveSet  #глефа-крушитель
+  productEntity: WeaponCrusherGlaive
+  cost:
+    LavaRudaIvent: 12
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: LavaClothingOuterHardsuitSpatioSet  # скафандр
+  name: буровой скафандр
+  description: Более прочная броня, чем у максимального скафандра, обеспечивает 85% защиты от высоких температур, но при этом снижает скорость передвижения на 15% и обеспечивает лишь 35% защиты от колющих ударов (на планете Лавленд, где врагов, наносящих такие повреждения, мало).
+  productEntity: LavaClothingOuterHardsuitSpatio
+  cost:
+    LavaRudaIvent: 20
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: ClothingOuterHardsuitMaximSet #Максимальный скафандр
+  name: максимальный скафандр
+  description: Имеет увеличенную защиту, а так же он не замедляет вас.
+  productEntity: ClothingOuterHardsuitMaxim
+  cost:
+    LavaRudaIvent: 20
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: MedkitFilledSet #Аптечка
+  productEntity: MedkitFilled
+  cost:
+    LavaRudaIvent: 4
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: LavaBruteAutoInjectorSet #Омнизин
+  productEntity: LavaBruteAutoInjector
+  cost:
+    LavaRudaIvent: 6
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: SpaceCash1000Set #деньги
+  productEntity: SpaceCash1000
+  cost:
+    LavaRudaIvent: 10
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: CigPackMixedMedicalSet #Сигареты
+  productEntity: CigPackMixedMedical
+  cost:
+    LavaRudaIvent: 2
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: BoxMRESet #Паёк
+  productEntity: BoxMRE
+  cost:
+    LavaRudaIvent: 2
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: ClothingBeltSalvageWebbingSet #РПС
+  name: разгрузка исследователя
+  description: Можно использовать для хранения разных мелких предметов. Надевается в слот пояс. Позволяет хранить в себе инженерные инструменты, шахтёрские инструменты и принадлежности, некоторую добычу с фауны Лаваленда, медикаменты, руду и всякие безделушки.
+  productEntity: ClothingBeltSalvageWebbing
+  cost:
+    LavaRudaIvent: 8
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: ClothingBackpackDuffelSalvageLavaSet
+  name: набор Фултона
+  description: При установке обозначает пункт назначения для эвакуации предметов и людей с помощью шара Фултона.
+  productEntity: ClothingBackpackDuffelSalvageLava
+  cost:
+    LavaRudaIvent: 4
+  categories:
+  - LavaUplinkWearablesMagician
+- type: entity
+  parent: ClothingBackpackDuffelSalvage
+  id: ClothingBackpackDuffelSalvageLava
+  name: вещмешок шахтёра
+  description: Большой вещмешок для хранения дополнительных экзотических сокровищ.
+  components:
+    - type: StorageFill
+      contents:
+        - id: Fulton
+        - id: FultonBeacon
+
+- type: listing
+  id: JetpackBlueSet
+  name: навесной джетпак
+  description: Джетпак, устанавливаемый в шахтёрский скафандр и позволяющий перемещаться в невесомости. Пользуется спросом у отдела контроля и стройбата.
+  productEntity: JetpackVoidFilled
+  cost:
+    LavaRudaIvent: 9
+  categories:
+  - LavaUplinkWearablesMagician
+
+- type: listing
+  id: Pickaxe2Set
+  name: усовершенствованная кирка
+  description: Самая сильная кирка. Если вы не беситесь с жиру, то она вам ни к чему.
+  productEntity: Pickaxe2
+  cost:
+    LavaRudaIvent: 10
+  categories:
+  - LavaUplinkWearablesMagician
+- type: entity
+  name: усовершенствованная кирка
+  parent: Pickaxe
+  id: Pickaxe2
+  description: Самая сильная кирка. Если вы не беситесь с жиру, то она вам ни к чему.
+  components:
+  - type: MeleeWeapon
+    attackRate: 0.9
+    wideAnimationRotation: -300
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+      params:
+        volume: -4
+    damage:
+      groups:
+        Brute: 10
+
+- type: listing
+  id: LavaDeathRattleImplanterSet
+  name: имплант оповещения о смерти
+  description: Этот имплантат сообщит по радиоканалу снабжения, если пользователь попадет в критическое состояние или умрет.
+  productEntity: LavaDeathRattleImplanter
+  cost:
+    LavaRudaIvent: 3
+  categories:
+  - LavaUplinkWearablesMagician
+- type: entity
+  id: LavaDeathRattleImplanter
+  name: имплантер шахтёра
+  description: Имплантер шахтёра, предсмертвое оповещение. Этот имплантат сообщит по радиоканалу снабжения, если пользователь попадет в критическое состояние или умрет.
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: LavaDeathRattleImplant
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LavaDeathRattleImplant
+  name: имплантер
+  description: Этот имплантат сообщит по радиоканалу снабжения, если пользователь попадет в критическое состояние или умрет.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with rattle implant needs to give the chair mobstate so it can die first
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical
+      - Dead
+    - type: Rattle
+      radioChannel: Supply
+
+- type: listing
+  id: LavaProto
+  productEntity: LavaWeaponProtoKineticAccelerator
+  cost:
+    LavaRudaIvent: 25
+  categories:
+  - LavaUplinkWearablesMagician
+
+
+
+#СКАФАНДР буровой.
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: LavaClothingOuterHardsuitSpatio
+  name: буровой скафандр утилизатора
+  description: Бронированный скафандр, предназначенный для шахтёров на Лаваленде.
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/spatio.rsi
+  - type: Clothing
+    sprite: Genezis/Mobs/Monster/spatio.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.7
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.55
+        Slash: 0.55
+        Piercing: 0.65
+        Heat: 0.15
+        Radiation: 0.3 #salv is supposed to have radiation hazards in the future
+        Caustic: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.85
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMaxim
+
+#УСКОРИТЕЛЬ
+
+- type: entity
+  name: боевой протокинетический ускоритель
+  id: LavaWeaponProtoKineticAccelerator
+  parent: WeaponProtoKineticAcceleratorBase
+  description: Стреляет кинетическими зарядами с низким уроном на короткое расстояние. Имеет увеличенный боекомплект — 2 снаряда, а также более высокую скорострельность, но при этом более медленную перезарядку.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+    layers:
+    - state: icon
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 1.5
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 2
+    count: 2
+  - type: Gun
+    fireRate: 2.5
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 44
+    maxAngle: 45
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: Construction
+    graph: GhostSheet
+    node: ghost_sheet
+
+#МЕДИПЕН
+
+- type: entity
+  name: автоинъектор от повреждений
+  parent: BruteAutoInjector
+  id: LavaBruteAutoInjector
+  description: Экспресс-доза омнизина, предназначенная для применения в боевых условиях.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 20
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 20
+  - type: Tag
+    tags: []
+
+
+
+#Скафандр Берсерк
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitBerserker
+  name: скафандр чемпиона
+  description: Специальный костюм, защищающий от опасных сред с низким давлением. Почти не замедляет, защищает от бури и огня. Почувствуй себя чемпионом!
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/warhammer.rsi
+  - type: Clothing
+    sprite: Genezis/Mobs/Monster/warhammer.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBerserker
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.75
+        Heat: 0.1
+        Radiation: 0.2 #salv is supposed to have radiation hazards in the future
+        Caustic: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.75
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitBerserker
+  name: шлем скафандра чемпиона
+  description: Специальный костюм, защищающий от опасных сред с низким давлением. Почти не замедляет, защищает от бури и огня. Почувствуй себя чемпионом!
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/warhammerr.rsi
+  - type: Clothing
+    sprite: Genezis/Mobs/Monster/warhammerr.rsi
+  - type: PointLight
+    color: green
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+
+#НаноМед
+- type: entity
+  parent: VendingMachineWallmount
+  id: VendingMachineWallMedical2
+  name: НаноМед
+  description: Это настенный раздатчик медицинского оборудования. Только натуральные химикаты!
+  suffix: Открытый
+  components:
+  - type: VendingMachine
+    pack: NanoMedInventory2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/wallmed.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+
+- type: vendingMachineInventory
+  id: NanoMedInventory2
+  startingInventory:
+    Brutepack: 1
+    Ointment: 1
+    Bloodpack: 1
+
+#ЯЩИК НЕКРОПОЛЯ
+- type: entity
+  parent: CratePirate
+  id: Necrocrateopen
+  name: сундук Некрополя
+  description: Что же он скрывает? Столько загадок и тайн! И мне кажется, что он смотрит на меня.
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/piratechest.rsi
+    layers:
+    - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Genezis/Mobs/Monster/piratechest.rsi
+    state: crate_icon
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door
+
+- type: entity
+  id: NecrocrateopenRandom
+  parent: Necrocrateopen
+  components:
+    - type: StorageFill
+      contents:
+        - id: LavaRudaIvent #КристаллСундук
+          prob: 0.50
+        - id: LavaRudaIvent #КристаллСундук
+          prob: 0.50
+        - id: LavaRudaIvent #КристаллСундук
+          prob: 0.50
+        - id: LavaRudaIvent #КристаллСундук
+          prob: 0.50
+        - id: LavaRudaIvent #КристаллСундук
+          prob: 0.50
+        - id: LavaRudaIvent #КристаллСундук
+          prob: 0.50
+        - id: HealingToolboxKernel #ЯдроСундук
+          prob: 0.50
+        - id: Ash #ЯдроСундук
+          prob: 0.50
+        - id: ClothingBeltQuiverRev #СтрелыСундук
+          prob: 0.33
+        - id: SpearBone #КопьеСундук
+          prob: 0.10
+        - id: ClothingHeadHelmetBone #ШлемСундук
+          prob: 0.44
+        - id: ClothingOuterArmorBone #КостяСундук
+          prob: 0.2
+        - id: ClothingNeckCloakMiner #ПлащШахтёрСундук
+          prob: 0.2
+        - id: ClothingNeckCloakVoid #ПлащПустотыСундук
+          prob: 0.1
+        - id: ClothingNeckCloakGoliathGoliath #ПлащГолиафСундук
+          prob: 0.05
+        - id: ClothingNeckCloakGoliathCloak #ПлащГолиафВанилСундук
+          prob: 0.07
+        - id: AnomalyCoreFlesh #ЯдроАнолимииСундук
+          prob: 0.10
+        - id: WeaponFlareGun #ПлащГолиафВанилСундук
+          prob: 0.1
+        - id: ClothingOuterHardsuitLuxury #СкафЭлитСундук
+          prob: 0.1
+        - id: LavaClothingOuterHardsuitSpatio #СкафБурСундук
+          prob: 0.005
+        - id: ClothingOuterHardsuitMaxim #СкафМаксСундук
+          prob: 0.005
+        - id: Claymore #КлейморСундук
+          prob: 0.05
+        - id: UnholyHalberd #алебардаСундук
+          prob: 0.05
+        - id: SheetBrass #ЛатуньСундук
+          prob: 0.05
+        - id: ClothingOuterHardsuitBerserker #БерсеркСундук
+          prob: 0.005
+        - id: EldritchBlade #КлинокКультаСундук
+          prob: 0.005
+        - id: LavaWeaponWandFireball #ОгненныйПосохСундук
+          prob: 0.0010
+        #Ваниль
+        - id: CigPackSyndicate #СигарСундук
+          prob: 0.33
+        - id: WeaponSniperMosin #МосинСундук
+          prob: 0.2
+        - id: ThrowingKnivesKit #НожыСундук
+          prob: 0.005
+        - id: WeaponSniperHristov #СнайпаСундук
+          prob: 0.005
+        - id: ClothingBeltSyndieHolster #КобураСундук
+          prob: 0.2
+        - id: ClothingBackpackSyndicate #РюкзСундук
+          prob: 0.2
+        - id: StimkitFilled #стимпакСундук
+          prob: 0.2
+        - id: LanternFlash #СветильникСундук
+          prob: 0.2
+        - id: SlipocalypseClusterSoap #МылоСундук
+          prob: 0.2
+        - id: ToolboxSyndicateFilled #ИнструментСундук
+          prob: 0.005
+        - id: DehydratedSpaceCarp #КарпСундук
+          prob: 0.2
+        - id: ClothingBackpackDuffelSyndicateCostumeClown #КлоунСундук
+          prob: 0.005
+        - id: ClothingHeadHatCatEars #УшкиСундук
+          prob: 0.0010
+
+- type: entity
+  name: палочка огненного шара
+  parent: WeaponWandBase
+  id: LavaWeaponWandFireball
+  description: Огромные огненные шары! Удивительно, но для использования этого посоха достаточно навыков стрельбы!
+  components:
+  - type: Sprite
+    layers:
+    - state: fire
+    - state: fire-effect
+      map: ["effect"]
+  - type: Gun
+    fireRate: 4
+    soundGunshot:
+      path: /Audio/Magic/fireball.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileAnomalyFireballDrake
+    capacity: 10
+    count: 10
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 10
+
+#КРАФТЫ
+
+#1 Ваниль
+- type: construction
+  name: костяной доспех
+  id: BoneArmorK
+  graph: BoneArmor
+  startNode: start
+  targetNode: armor
+  category: Шахтёрство
+  description: Сидит на вас как вторая кожа.
+  icon: { sprite: Clothing/OuterClothing/Armor/bone_armor.rsi, state: icon }
+  objectType: Item
+#2
+- type: construction
+  name: костяной шлем
+  id: BoneHelmetK
+  graph: BoneHelmet
+  startNode: start
+  targetNode: helmet
+  category: Шахтёрство
+  description: Круто выглядящий шлем, сделанный из черепов ваших врагов.
+  icon: { sprite: Clothing/Head/Helmets/bone_helmet.rsi, state: icon }
+  objectType: Item
+#3
+- type: construction
+  name: костяное копьё
+  id: SpearBoneK
+  graph: SpearBone
+  startNode: start
+  targetNode: spear
+  category: Шахтёрство
+  description: Копьё, сделанное из костей.
+  icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
+  objectType: Item

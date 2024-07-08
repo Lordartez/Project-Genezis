@@ -1,0 +1,46 @@
+- type: entity
+  parent: Clothing
+  id: ClothingBackpackPlasmaTank
+  name: ранцевый плазменный бак
+  description: Бак для хранения жидкой плазмы. Хоть и в него можно залить другие реагенты, но оружие не будет так эффективно стрелять.
+  components:
+  - type: Tag
+    tags:
+    - PlasmaTank
+    - WhitelistChameleon
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    slots: BACK
+    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    capacity: 100
+    proto: FireThrowerBall
+    whitelist:
+      tags:
+        - SheetPlasma
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Appearance
+  - type: SolutionTransfer
+    transferAmount: 50
+    maxTransferAmount: 100
+    minTransferAmount: 10
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: tank
+  - type: RefillableSolution
+    solution: tank
+  - type: DrainableSolution
+    solution: tank
+  - type: ExaminableSolution
+    solution: tank

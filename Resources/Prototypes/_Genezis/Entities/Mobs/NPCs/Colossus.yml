@@ -1,0 +1,167 @@
+﻿#КОЛОСС
+- type: entity
+  parent: MobBubblegum
+  id: MobColossus
+  name: Колосс
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/dragon.rsi
+    layers:
+      - state: eva
+        map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: eva
+      Dead:
+        Base: eva
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 3.5
+  - type: RechargeBasicEntityAmmo #Кислота
+    rechargeCooldown: 1
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 4
+    count: 4
+  - type: Gun
+    fireRate: 5
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg  #Звук кислоты   #Кислота
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: AttackLava
+    damage:
+      types:
+        Blunt: 15
+        Piercing: 15
+        Structural: 70
+  - type: MobThresholds #ХП
+    thresholds:
+      0: Alive
+      1000: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      900: 0.7
+  - type: Butcherable #Разделка
+    spawned:
+      - id: ClothingNeckCloakHeraldBubblegum
+        amount: 1
+      - id: LavaRudaIvent
+        amount: 4
+  - type: Bloodstream
+    bloodMaxVolume: 0
+    bloodReagent: Cryoxadone
+
+- type: entity
+  name: Спавнер Колосс
+  id: SpawnMobColossus
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: eva
+      sprite: Genezis/Mobs/Monster/dragon.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobColossus
+
+- type: entity
+  id: SpawnerSignalColossus
+  name: одноразовый маркер спавна Колосс по сигналу
+  parent: BaseERTSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Genezis/Mobs/Monster/dragon.rsi
+        state: eva
+  - type: SpawnOnTrigger
+    proto: SpawnPointGhostColossus
+
+- type: entity
+  id: SpawnPointGhostColossus
+  name: спавнер роли Колосс
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: Колосс
+    description: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+    rules: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobColossus
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Genezis/Mobs/Monster/dragon.rsi
+        state: eva
+
+#Снаряд
+- type: entity
+  id: GrenadeFragColossus
+  name: осколочная граната
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeFragColossus
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: frag
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: frag
+    suffix: false
+
+
+- type: entity
+  id: BulletGrenadeFragColossus
+  name: осколочная граната
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50 # about a ~6 tile radius
+    intensitySlope: 1
+    maxIntensity: 1
+
+#Лут
+- type: entity
+  parent: ClothingNeckCloakHerald
+  id: ClothingNeckCloakHeraldBubblegum
+  name: плащ Колосса
+  description: Редкий трофей!
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 #Быстрая броня, но защита не лучшая.
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.8
+        Radiation: 0.8
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 1.15
+    sprintModifier: 1.15
+  - type: PointLight
+    radius: 3
+    energy: 2.5
+    color: "#ff4242"
+    castShadows: false

@@ -1,0 +1,25 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: Shahid
+  name: Жилет смертника
+  description: Вам не очень комфортно в нём.
+  components:
+  - type: Sprite
+    sprite: /Textures/Genezis/Clothing/OuterClothing/Misc/Shahid.rsi
+  - type: Clothing
+    sprite: /Textures/Genezis/Clothing/OuterClothing/Misc/Shahid.rsi
+  - type: OnUseTimerTrigger
+    delay: 15
+    examinable: false
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 3500
+    intensitySlope: 15
+    maxIntensity: 70
+    canCreateVacuum: true
+  - type: ActivateOnPaperOpened
+  - type: ExplodeOnTrigger
+  - type: TriggerOnSignal
+  - type: DeviceLinkSink
+    ports:
+      - Trigger

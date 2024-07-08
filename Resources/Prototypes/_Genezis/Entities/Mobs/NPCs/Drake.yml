@@ -1,0 +1,196 @@
+﻿#ДРЕЙК
+- type: entity
+  parent: MobBubblegum
+  id: MobAshDrake
+  name: Дрейк
+  components:
+  - type: Sprite
+    sprite: Genezis/Mobs/Monster/dragon.rsi
+    layers:
+      - state: dragon
+        map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: dragon
+      Dead:
+        Base: dragon_dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
+  - type: RechargeBasicEntityAmmo #Кислота
+    rechargeCooldown: 5
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileAnomalyFireballDrake
+    capacity: 10
+    count: 10
+  - type: Gun
+    fireRate: 5
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Magic/fireball.ogg  #Звук кислоты   #Кислота
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: AttackLava
+    damage:
+      types:
+        Blunt: 35
+        Piercing: 15
+        Structural: 200
+  - type: MobThresholds #ХП
+    thresholds:
+      0: Alive
+      650: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      550: 0.7
+  - type: Butcherable #Разделка
+    spawned:
+      - id: MaterialBones
+        amount: 1
+      - id: ArtifactFragment
+        amount: 4
+      - id: ClothingOuterArmorBoneBubblegum
+        amount: 1
+      - id: ClothingHeadHelmetBone
+        amount: 1
+      - id: LavaWeaponWandFireball
+        amount: 1
+  - type: Bloodstream
+    bloodMaxVolume: 0
+    bloodReagent: Cryoxadone
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.Самолечение
+    allowedStates:
+    - Alive
+    damageCap: 2000
+    damage:
+      types:
+        Heat: -5.5
+      groups:
+        Brute: -5.5
+        Toxin: -5
+        Airloss: -5.5
+        Burn: -5.5
+  - type: Vocal
+    sounds:
+      Male: UnisexDragon
+      Female: UnisexDragon
+      Unsexed: UnisexDragon #Крик
+ #Крик
+- type: emoteSounds
+  id: UnisexDragon
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Genezis/Voice/Lavaland/space_dragon_roar.ogg
+    Laugh:
+      path: /Audio/Genezis/Voice/Lavaland/space_dragon_roar.ogg
+    Chitter:
+      path: /Audio/Genezis/Voice/Lavaland/space_dragon_roar.ogg
+    Click:
+      path: /Audio/Genezis/Voice/Lavaland/space_dragon_roar.ogg
+    Weh:
+      collection: Weh
+
+- type: entity
+  name: Спавнер Дрейк
+  id: SpawnMobDrake
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: dragon
+      sprite: Genezis/Mobs/Monster/dragon.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAshDrake
+
+- type: entity
+  id: SpawnerSignalDrake
+  name: одноразовый маркер спавна Дрейк по сигналу
+  parent: BaseERTSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Genezis/Mobs/Monster/dragon.rsi
+        state: dragon
+  - type: SpawnOnTrigger
+    proto: SpawnPointGhostDrake
+
+- type: entity
+  id: SpawnPointGhostDrake
+  name: спавнер роли Дрейк
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: Дрейк
+    description: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+    rules: Ваша задача — дождаться шахтёра, и только после этого покинуть своё убежище. Ломать булыжники нельзя вне боя.
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAshDrake
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Genezis/Mobs/Monster/dragon.rsi
+        state: dragon
+
+- type: entity
+  parent: ClothingOuterArmorBone
+  id: ClothingOuterArmorBoneBubblegum
+  name: доспех из костей дракона
+  description: Редкий трофей!
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.55 #Быстрая броня, но защита не лучшая.
+        Slash: 0.55
+        Piercing: 0.55
+        Heat: 0.25
+        Radiation: 0.9
+        Caustic: 0.9
+
+- type: entity
+  id: ProjectileAnomalyFireballDrake #Пуля
+  name: убегай!
+  description: Пламя огня!
+  parent: ProjectileFireball
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 30
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 0.1
+    totalIntensity: 0.3
+    maxTileBreak: 0
+  - type: ClusterGrenade
+    fillPrototype: PelletClusterIncendiary
+    maxGrenadesCount: 30
+    grenadeType: enum.GrenadeType.Shoot
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+  - type: IgnitionSource
+    ignited: true

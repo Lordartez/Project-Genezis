@@ -1,0 +1,186 @@
+﻿---
+- type: entity
+  name: Космический Слизнекот
+  id: MobSlugCat
+  parent:
+    - MobBaseAncestor
+    - MobAdultSlimes
+  description: По всей видимости, существует секта, поклоняющаяся этим
+    очаровательным вредителям.
+  components:
+    - type: NameIdentifier
+      group: SlugCat
+    - type: ReplacementAccent
+      accent: slugcat
+    - type: Sprite
+      drawdepth: SmallMobs
+      layers:
+        - map:
+            - enum.DamageStateVisualLayers.Base
+          sprite: Genezis/Mobs/Player/SlugCat/slugcat.rsi
+          state: slugcat
+        - map:
+            - enum.HumanoidVisualLayers.Handcuffs
+          color: "#ffffff"
+          sprite: Objects/Misc/handcuffs.rsi
+          state: body-overlay-2
+          visible: false
+    - type: RandomSprite
+      getAllGroups: true
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            slugcat: SlugCatColors
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: slugcat
+        Critical:
+          Base: slugcat_oof
+        Dead:
+          Base: slugcat_rip
+    - type: MobThresholds
+      thresholds:
+        "0": Alive
+        "80": Critical
+        "145": Dead
+    - type: Bloodstream
+      bloodReagent: Slime
+      bloodlossDamage:
+        types:
+          Bloodloss: 0.5
+    - type: Temperature
+      heatDamageThreshold: 360
+      coldDamageThreshold: 285
+      currentTemperature: 310.15
+      specificHeat: 42
+    - type: Butcherable
+      butcheringType: Spike
+      spawned:
+        - id: FoodMeatSlime
+          amount: 4
+    - type: Speech
+      speechVerb: Wawa
+      speechSounds: Wawa
+    - type: TypingIndicator
+      proto: slime
+    - type: InteractionPopup
+      successChance: 0.5
+      interactSuccessString: Вы глядите слизнекота по его слизнявой головке.
+      interactFailureString: Вы пытаетесь дотянуться до его слизнявой головке, но он отходит от вас!
+      interactSuccessSpawn: EffectHearts
+      interactSuccessSound:
+        path: Audio/Genezis/Voice/SlugCat/wawa_chillin.ogg
+      interactFailureSound:
+        path: Audio/Genezis/Voice/SlugCat/wawa_chatter.ogg
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 5
+      baseSprintSpeed: 7
+    - type: MeleeWeapon
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      angle: 30
+      animation: WeaponArcBite
+      damage:
+        types:
+          Piercing: 15
+    - type: Physics
+    - type: GhostRole
+      prob: 1
+      makeSentient: true
+      name: Космический слизнекот
+      description: Вава! Вавава. Ва, ва, ва, ВА!
+    - type: Food
+    - type: Inventory
+      templateId: slugcat
+    - type: InventorySlots
+    - type: GhostTakeoverAvailable
+    - type: AlwaysRevolutionaryConvertible
+    - type: Hunger
+    - type: Clumsy
+      clumsyDamage:
+        types:
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3
+- type: accent
+  id: slugcat
+  fullReplacements:
+    - Ва!
+    - Ва?
+    - Ва.
+    - Ва...
+    - ВаВа!
+    - ВаВа?
+    - ВаВа.
+    - ВаВа...
+- type: speechVerb
+  id: Wawa
+  name: Слизнекотовый
+  speechVerbStrings:
+    - интонирует
+    - утверждает
+    - заявляет
+- type: palette
+  id: SlugCatColors
+  name: SlugCatColors
+  colors:
+    Default: "#ffffff"
+    Innocent: "#f6f439"
+    Angry: "#dc5864"
+    Eldritch: "#dc5864"
+    Forgotten: "#111111"
+    Fat: "#fefcab"
+    WarCriminal: "#ab3430"
+    Cocaine: "#679cfe"
+    Mutant: "#7824a0"
+    Damned: "#98e652"
+- type: speechSounds
+  id: Wawa
+  saySound:
+    path: Audio/Genezis/Voice/SlugCat/wawa_statement.ogg
+  askSound:
+    path: Audio/Genezis/Voice/SlugCat/wawa_question.ogg
+  exclaimSound:
+    path: Audio/Genezis/Voice/SlugCat/wawa_exclaim.ogg
+- type: inventoryTemplate
+  id: slugcat
+  slots:
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
+      uiWindowPos: 1,0
+      strippingWindowPos: 0,0
+      displayName: Head
+    - name: ears
+      slotTexture: ears
+      slotFlags: EARS
+      stripTime: 3
+      uiWindowPos: 0,2
+      strippingWindowPos: 1,2
+      displayName: Ears
+    - name: mask
+      slotTexture: mask
+      slotFlags: MASK
+      uiWindowPos: 0,1
+      strippingWindowPos: 1,1
+      displayName: Mask
+    - name: eyes
+      slotTexture: glasses
+      slotFlags: EYES
+      stripTime: 3
+      uiWindowPos: 1,1
+      strippingWindowPos: 0,0
+      displayName: Eyes
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      displayName: ID
+- type: nameIdentifierGroup
+  id: SlugCat
+  minValue: 1
+  maxValue: 99

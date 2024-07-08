@@ -141,7 +141,7 @@ public sealed class CentcommSystem : EntitySystem
         }
 
         _chat.DispatchStationAnnouncement(CentComGrid,
-            $"Внимание! Радары обнаружили {shuttleName} шаттл, входящий в космическое пространство объекта Центрального Командования!",
+            $"Внимание! Радары обнаружили {shuttleName} шаттл, входящий в космическое пространство объекта Космический порт!",
             "Радар", colorOverride: Color.Crimson);
     }
 
@@ -258,9 +258,9 @@ public sealed class CentcommSystem : EntitySystem
             map, CentComMap, new MapLoadOptions()
             {
                 LoadMap = false
-            }, "Central Command").FirstOrNull(HasComp<BecomesStationComponent>);
+            }, "Космопорт").FirstOrNull(HasComp<BecomesStationComponent>);
 
-        _metaDataSystem.SetEntityName(_mapManager.GetMapEntityId(CentComMap), "CentCom");
+        _metaDataSystem.SetEntityName(_mapManager.GetMapEntityId(CentComMap), "SpacePort");
 
         if (ent != null)
         {
