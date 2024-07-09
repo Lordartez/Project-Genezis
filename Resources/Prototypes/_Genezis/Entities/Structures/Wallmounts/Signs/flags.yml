@@ -1,0 +1,8 @@
+- type: entity
+  parent: BaseFlag
+  id: GrizliFlag
+  name: Флаг отряда "Гризли"
+  description: "Кредиты или смерть, Господа"
+  components:
+  - type: Sprite
+    state: Grizli_flag
