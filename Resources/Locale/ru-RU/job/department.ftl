@@ -1,8 +1,8 @@
 department-Cargo = Отдел снабжения
-department-Civilian = Сервисный отдел
-department-Command = Командование
-department-Engineering = Инженерный отдел
-department-Medical = Медицинский отдел
-department-Security = Служба безопасности
-department-Science = Научный отдел
+department-Civilian = Отдел обслуживания
+department-Command = Управление "Триглав"
+department-Engineering = Стройбат
+department-Medical = Медсанчасть
+department-Security = Отдел контроля
+department-Science = Научно-исследовательское отделение
 department-Specific = На определённых станциях
