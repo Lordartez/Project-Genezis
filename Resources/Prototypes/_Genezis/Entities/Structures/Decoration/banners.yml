@@ -1,0 +1,9 @@
+- type: entity
+  id: BannerTrigrav
+  parent: BannerBase
+  name: Знамя Триглава
+  description: Знамя Триглава, своим видом показывает истоки корпорации.
+  components:
+  - type: Sprite
+    sprite: Genezis/Structures/Decoration/banner.rsi
+    state: banner

@@ -1,11 +1,7 @@
 - type: lobbyBackground
-  id: twix
-  background: /Textures/Backmen/LobbyScreens/twix.png
+  id: lava
+  background: /Textures/LobbyScreens/lava.webp
 
 - type: lobbyBackground
-  id: capoleon
-  background: /Textures/Backmen/LobbyScreens/capoleon.png
-
-- type: lobbyBackground
-  id: kissme
-  background: /Textures/Backmen/LobbyScreens/kissme.jpg
+  id: lava2
+  background: /Textures/LobbyScreens/lava2.webp
