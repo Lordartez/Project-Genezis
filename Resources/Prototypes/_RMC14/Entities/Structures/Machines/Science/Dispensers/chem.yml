@@ -1,0 +1,67 @@
+- type: entity
+  parent: ChemDispenser
+  id: RMCDispenserChem
+  name: chemical dispenser
+  description: A complex machine for mixing elements into chemicals. A We-Ya product.
+  components:
+  - type: Sprite
+    sprite: _RMC14/Structures/Machines/Science/dispenser.rsi
+    layers:
+    - state: base
+    - state: onlight
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    snapCardinals: true
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ReagentDispenser
+    storageWhitelist:
+      tags:
+      - ChemDispensable
+    pack: RMCDispenserChemInventory
+  - type: Machine
+    board: CMCircuitboardDispenserChem
+  - type: ApcPowerReceiver
+    needsPower: false # TODO RMC14
+    powerLoad: 0
+
+- type: entity
+  parent: RMCDispenserChem
+  id: RMCDispenserChemEmpty
+  suffix: Empty
+  components:
+  - type: ReagentDispenser
+    pack: RMCEmptyInventory
+
+- type: reagentDispenserInventory
+  id: RMCDispenserChemInventory
+  inventory:
+  - RMCJugWater
+  - RMCJugEthanol
+  - RMCJugOxygen
+  - RMCJugCopper
+  - RMCJugNitrogen
+  - RMCJugHydrogen
+  - RMCJugPotassium
+  - RMCJugMercury
+  - RMCJugSulfur
+  - RMCJugCarbon
+  - RMCJugChlorine
+  - RMCJugFluorine
+  - RMCJugSodium
+  - RMCJugPhosphorus
+  - RMCJugLithium
+  - RMCJugSugar
+  - RMCJugIron
+  - RMCJugAluminum
+  - RMCJugSilicon
+  - RMCJugRadium
+  - RMCJugSulphuricAcid
+
+- type: reagentDispenserInventory
+  id: RMCEmptyInventory

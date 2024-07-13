@@ -1,0 +1,50 @@
+- type: Tag
+  id: CMCartridge10x20mm
+
+- type: Tag
+  id: CMCartridgePistol9mm
+
+- type: Tag
+  id: CMCartridgeRevolver44
+
+- type: Tag
+  id: CMCartridgeRifle10x24mm
+
+- type: Tag
+  id: CMMortarShell
+
+- type: Tag
+  id: CMBloodPack
+
+- type: Tag
+  id: CMGauze
+
+- type: Tag
+  id: CMOintment
+
+- type: Tag
+  id: CMFirstAidKit
+
+- type: Tag
+  id: CMSynthGraft
+
+- type: Tag
+  id: CMSurgicalLine
+
+- type: Tag
+  id: CMBurnKit
+
+- type: Tag
+  id: CMTraumaKit
+
+- type: Tag
+  id: Pouch
+
+- type: Tag
+  id: LauncherCompatibleGrenade
+
+- type: Tag
+  id: CMAutoInjector
+
+- type: Tag
+  id: CMFlarePack

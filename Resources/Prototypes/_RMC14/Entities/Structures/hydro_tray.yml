@@ -1,0 +1,37 @@
+﻿- type: entity
+  parent: hydroponicsTray
+  name: hydroponics tray
+  id: CMHydroponicsTray
+  description: Used for growing plants.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: _RMC14/Structures/hydroponics.rsi
+    layers:
+    - state: hydrotray3
+    - state: over_lowhealth3
+      map: [ "health_alert" ]
+      visible: false
+    - state: over_lowwater3
+      map: [ "water_alert" ]
+      visible: false
+    - state: over_lownutri3
+      map: [ "nutri_alert" ]
+      visible: false
+    - state: over_alert3
+      map: [ "undefined_alert" ]
+      visible: false
+    - state: over_harvest3
+      map: [ "harvest_alert" ]
+      visible: false
+

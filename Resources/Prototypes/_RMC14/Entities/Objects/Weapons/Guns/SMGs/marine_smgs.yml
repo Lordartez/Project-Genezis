@@ -1,0 +1,60 @@
+- type: entity
+  abstract: true
+  parent: CMBaseWeaponRifle
+  id: CMBaseWeaponSMG
+  components:
+  - type: Item
+    size: Large
+  - type: AmmoCounter
+  - type: Gun
+    minAngle: 20
+    maxAngle: 75
+    angleIncrease: 25
+    angleDecay: 45
+    fireRate: 7
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -50
+    angleIncrease: -5
+    angleDecay: 10
+  - type: WieldableSpeedModifiers
+    baseWalk: 0.92
+    baseSprint: 0.864
+  - type: WieldDelay
+    baseDelay: 0.2
+
+- type: entity
+  parent: CMBaseWeaponSMG
+  name: M63 submachine gun
+  id: WeaponSMGM63
+  description: The Aegis Battlefield Armaments M-63 submachinegun. Occasionally carried by light-infantry, scouts, engineers and medics.
+  components:
+  - type: Sprite
+    sprite: _RMC14/Objects/Weapons/Guns/SMGs/m63.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Clothing
+    sprite: _RMC14/Objects/Weapons/Guns/SMGs/m63.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_RMC14/Weapons/Guns/Gunshots/gun_m63.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - CMMagazineSMGM63
+          - CMMagazineSMGM63AP
+          - CMMagazineSMGM63Ext

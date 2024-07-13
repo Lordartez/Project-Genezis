@@ -6,3 +6,12 @@
   components:
   - type: Sprite
     state: Grizli_flag
+
+- type: entity
+  parent: BaseFlag
+  id: TriglavFlag
+  name: Флаг Триглава
+  description: "Мы и есть будущее"
+  components:
+  - type: Sprite
+    state: Triglav_flag

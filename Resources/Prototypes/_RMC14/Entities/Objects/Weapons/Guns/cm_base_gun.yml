@@ -1,0 +1,9 @@
+﻿- type: entity
+  abstract: true
+  id: CMBaseWeaponGun
+  components:
+  - type: Clothing
+    quickEquip: false
+  - type: UseDelay
+    delay: 0
+  - type: WieldDelay
