@@ -41,7 +41,7 @@
 
 #СПАВНЕР
 - type: entity
-  name: спавнер пеплоходца
+  name: спавнер дикого трупа
   id: SpawnerMobPlasmaCorpse
   parent: MarkerBase
   components:
@@ -57,8 +57,8 @@
     - type: Sprite
       layers:
         - state: blue
-        - sprite: Mobs/Animals/mouse.rsi
-          state: icon-2
+        - sprite: Genezis/Mobs/Demons/PlasmaCorpse.rsi
+          state: abomination
         - state: timed
     - type: Timer
     - type: TimedSpawner

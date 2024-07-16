@@ -1,0 +1,73 @@
+- type: entity
+  parent: BaseMobFlesh
+  id: MobFastCorpse
+  name: Сталкер
+  description: Мертвец чьё тело подверглось сильному разложению, тем не менее он стал легче и быстрее.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Genezis/Mobs/Demons/FastCorpse.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: abomination
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: abomination
+      Dead:
+        Base: dead
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.6
+    baseSprintSpeed: 1.9
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 5
+        Structural: 5
+
+
+#СПАВНЕР
+- type: entity
+  name: спавнер сталкера
+  id: SpawnerMobFastCorpse
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobFastCorpse
+
+- type: entity
+  name: периодический спавнер сталкера
+  id: SpawnerTimedMobFastCorpse
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Genezis/Mobs/Demons/FastCorpse.rsi
+          state: abomination
+        - state: timed
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+        - MobFastCorpse
+      # round ~90m
+      # one spawner should only spawn ~5 mice for sanity reasons
+      # therefore 18m
+      # use 50% chance for randomness and balance with halved interval
+      chance: 0.5
+      intervalSeconds: 240
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
